@@ -8,7 +8,12 @@ const uuidv1 = require('uuid/v1');
 
 class ScanPlate extends Component {
   onTakePhoto (dataUri) {
-    // TODO store image in Firebase
+    let id = uuidv1();
+    let fileRef = app.storage().ref("/plates/"+ id +"/raw.jpg");
+
+      fileRef.putString(dataUri, 'data_url').then(function(snapshot) {
+        console.log(snapshot);
+      });
   }
 
   render() {

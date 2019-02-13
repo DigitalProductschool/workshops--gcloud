@@ -11,7 +11,7 @@ class App extends Component {
       <Router>
         <div>
           <Route exact path="/" component={ScanPlate} />
-          <Route exact path="/annotate" component={AnnotateResult} />
+          <Route path="/annotate/:id" component={AnnotateResult} />
         </div>
       </Router>
     );

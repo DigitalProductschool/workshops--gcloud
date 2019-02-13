@@ -3,20 +3,31 @@ import { withRouter } from 'react-router';
 import Camera, { FACING_MODES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 import app from '../../base.js';
+import { Redirect } from  'react-router';
 
 const uuidv1 = require('uuid/v1');
 
 class ScanPlate extends Component {
-  onTakePhoto (dataUri) {
-    let id = uuidv1();
-    let fileRef = app.storage().ref("/plates/"+ id +"/raw.jpg");
+  constructor(props) {
+    super(props);
 
-      fileRef.putString(dataUri, 'data_url').then(function(snapshot) {
-        console.log(snapshot);
-      });
+    this.state = {
+      resultId: undefined
+    }
+  }
+
+  onTakePhoto (dataUri) {
+    // TODO Store image in Storage 
   }
 
   render() {
+    const { resultId } = this.state;
+
+    if (resultId) {
+      const annotateUrl = '/annotate/' + resultId;
+      return <Redirect to={annotateUrl} push={true} />
+    }
+
     return (
       <div style={{backgroundColor:"black", display: "grid", justifyContent: "center"}}>
       <h2 style={{color:"#F9AA33", textAlign:"center"}}>Please scan the next car plate!</h2>
